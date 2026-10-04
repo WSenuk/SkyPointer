@@ -777,8 +777,9 @@ After changing it, upload the code again if nothing pops up.
 If everything went well. You can read off the serial monitor that it is connected to the wifi and it is picks out planes that are close to you. 
 ![Connected system ](images/wificonnected.png)
 ![Plane info ](images/planeinfo.png)
+
 You can check https://adsb.lol/ to see if this pick up is accurate.
-![Plane info 2 ](images/planeinfo.png)
+![Plane info 2 ](images/planeinfo2.png)
 
 ## Wiring
 
