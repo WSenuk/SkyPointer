@@ -23,10 +23,7 @@ The goal is to make plane spotting easier because the user can simply follow the
 
 ### System flow
 
-![System flow](systemflow.png)
-
----
-
+![System flow](images/systemflow.png)
 ---
 
 ## Parts needed to create this
