@@ -719,27 +719,35 @@ float calculateBearing(
 }
 ```
 </details>
-#### Adding Wifi
-Once the code is copied in. We need to connect the NodeMCU with your wifi. The NodeMCU works with a 2.4ghz connection. Turn on the hotspot on your phone so that the NodeMCU can connect to it. 
-We need to give it access to your wifi credentials. Add your wifi name and password between the brackets( "YOUR_WIFI_NAME", "YOUR_WIFI_PASSWORD" ).
+#### Adding Wi-Fi
+
+Once the code is copied in, we need to connect the NodeMCU to your Wi-Fi.
+
+The NodeMCU uses a **2.4 GHz Wi-Fi connection**. You can also turn on the hotspot on your phone and connect the NodeMCU to it.
+
+We need to give the NodeMCU access to your Wi-Fi. Add your Wi-Fi name and password between the quotation marks:
+
 ```cpp
 #define WIFI_SSID "YOUR_WIFI_NAME"
 #define WIFI_PASSWORD "YOUR_WIFI_PASSWORD"
 ```
+
+Replace `YOUR_WIFI_NAME` and `YOUR_WIFI_PASSWORD` with your own Wi-Fi details.
+
 #### Adding your location
-We are using ADSB.lol to help us track the flight.ADSB.lol is a community-driven, open-source flight tracking platform that provides unfiltered, live aviation data to the public.
-Unlike commercial flight trackers that block or hide certain aircraft, ADSB.lol is completely unfiltered. It relies on a global network of volunteers who use small, low-cost antenna setups to pick up ADS-B (Automatic Dependent Surveillance-Broadcast) signals broadcasted by airplanes.
-We are using its free API.
-
-In order for it to work, we need to add our location in. We need to add your latitude and longitude. Head to Google Maps select the location that you want to track. Select and location and right click the to get the latitude and longitude.
-![latitude and longitude](images/location.png)
-
-Look for:
+We are using **ADSB.lol** to help us track the aircraft.
+ADSB.lol is a community-driven, open-source flight tracking platform that provides live aviation data. It uses a network of volunteers who receive ADS-B signals broadcast by aircraft.
+For SkyPointer, we are using its API to get live aircraft data.
+To make this work, we need to add the location where SkyPointer will be used.
+Go to **Google Maps** and find the location you want to use. Right-click on the location to see its **latitude and longitude**.
+![Latitude and longitude](images/location.png)
+Look for this part in the code:
 ```cpp
 const float MY_LAT = 00.000000;
 const float MY_LON = 0.000000;
 ```
-And now change it to your own values. 
+Change these values to the latitude and longitude you found on Google Maps.
+For example:
 ```cpp
 const float MY_LAT = 52.359222;
 const float MY_LON = 4.908967;
