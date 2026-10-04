@@ -782,35 +782,23 @@ You can check https://adsb.lol/ to see if this pick up is accurate.
 ![Plane info 2 ](images/planeinfo2.png)
 
 ## Wiring
-
-Now that the software is set up, we can connect all the parts together.
-
-SkyPointer uses two motors:
-
-- A **28BYJ-48 stepper motor** to move the pointer left and right.
-- A **9g servo motor** to move the pointer up and down.
-
-The stepper motor is controlled through a **ULN2003 driver board**.
-
-The motors use an external **5V power supply** because they need more power than the NodeMCU should provide directly.
-
+Now connect all the parts together.
+SkyPointer uses:
+- A **28BYJ-48 stepper motor** for left and right movement.
+- A **9g servo motor** for up and down movement.
+- A **ULN2003 driver board** for the stepper motor.
+- An external **5V power supply** for the motors.
+- 
 ### Connecting the stepper motor
-
-First, connect the **28BYJ-48 stepper motor** to the ULN2003 driver board.
-
-The stepper motor has a white connector. This connector can be plugged directly into the white connector on the ULN2003 board.
-
-Now connect the ULN2003 driver board to the NodeMCU.
+Plug the **28BYJ-48 stepper motor** into the white connector on the ULN2003 board.
 
 Connect:
+- **D1 → IN1**
+- **D2 → IN2**
+- **D5 → IN3**
+- **D6 → IN4**
 
-- **NodeMCU D1 → ULN2003 IN1**
-- **NodeMCU D2 → ULN2003 IN2**
-- **NodeMCU D5 → ULN2003 IN3**
-- **NodeMCU D6 → ULN2003 IN4**
-
-These connections are also used in the code:
-
+This matches the code:
 ```cpp
 #define IN1 D1
 #define IN2 D2
@@ -818,91 +806,70 @@ These connections are also used in the code:
 #define IN4 D6
 ```
 
-The stepper motor will use these four connections to rotate the pointer left and right.
-
 ### Connecting the servo motor
+A 9g servo normally has three wires:
+- **Red = 5V**
+- **Brown/Black = GND**
+- **Orange/Yellow = Signal**
+Connect:
+- **D7 → Servo signal**
 
-The servo motor is used to move the pointer up and down.
-
-A normal 9g servo has three wires.
-
-The colors are usually:
-
-- **Red = 5V power**
-- **Brown or black = GND**
-- **Orange or yellow = Signal**
-
-Connect the signal wire from the servo to:
-
-- **NodeMCU D7 → Servo signal**
-
-This connection is also used in the code:
+This matches the code:
 
 ```cpp
 skyServo.attach(D7);
 ```
 
-The red and ground wires from the servo will be connected to the external 5V power supply.
-
 ### Connecting the 5V power supply
+Use an external power supply of around **5V and 1–2A**.
 
-The stepper motor and servo should not be powered directly from the NodeMCU 3.3V pin.
-
-Both motors can use more power than the NodeMCU can safely provide.
-
-For this prototype, use an external power supply of around:
-
-**5V and 1–2A**
-
-Connect the positive **5V** output from the power supply to:
-
+Connect **5V** to:
 - **ULN2003 VCC**
 - **Servo red wire**
 
-Connect the **GND** output from the power supply to:
-
+Connect **GND** to:
 - **ULN2003 GND**
 - **Servo brown/black wire**
 - **NodeMCU GND**
-
-The NodeMCU can still be powered with the USB cable connected to your computer.
-
-**Important:** The GND from the external power supply and the GND from the NodeMCU must be connected together. This makes sure all parts use the same ground.
-
-**Important:** Do not connect the stepper motor or servo to the NodeMCU 3.3V pin.
-
+The NodeMCU can stay powered through USB.
+**Important:** The NodeMCU GND and power supply GND must be connected together.
+**Important:** Do not power the motors from the NodeMCU 3.3V pin.
 ### Complete wiring overview
 
 | From | To |
 |---|---|
-| NodeMCU D1 | ULN2003 IN1 |
-| NodeMCU D2 | ULN2003 IN2 |
-| NodeMCU D5 | ULN2003 IN3 |
-| NodeMCU D6 | ULN2003 IN4 |
-| NodeMCU D7 | Servo signal wire |
+| D1 | ULN2003 IN1 |
+| D2 | ULN2003 IN2 |
+| D5 | ULN2003 IN3 |
+| D6 | ULN2003 IN4 |
+| D7 | Servo signal |
 | External 5V | ULN2003 VCC |
 | External 5V | Servo red wire |
 | External GND | ULN2003 GND |
-| External GND | Servo brown/black wire |
+| External GND | Servo GND |
 | External GND | NodeMCU GND |
 
-The **28BYJ-48 stepper motor** plugs directly into the white connector on the ULN2003 driver board.
-
 ### Wiring diagram
-
 ![SkyPointer wiring diagram](images/wiring-diagram.png)
 
-After everything is connected, check all the wires again before turning the prototype on.
+Check all wires before turning the prototype on.
+
 ---
 
 ## Testing the prototype
-
-### Testing the flight data
-
-### Testing the stepper motor
-
-### Testing the servo motor
-
+Before testing, place the motors in their starting positions.
+### Stepper motor
+Point the stepper motor to **North** before the 30 second setup starts.
+If your stepper motor does not have a plastic pointer piece, attach something simple to the shaft so you can clearly see which direction it is pointing.
+### Servo motor
+Place the servo in its starting position so the pointer is facing straight forward.
+Attach one of the small plastic servo arms that comes with the servo. This makes it easier to see the up and down movement.
+### Test
+Turn on SkyPointer and let it complete the 30 second North setup.
+After that, the system should find the closest aircraft and move:
+- the **stepper motor** left or right to show the direction
+- the **servo motor** up or down to show how high to look
+If both motors move and point in the expected direction, the prototype is working.
 ---
 
 ## Problems and solutions
