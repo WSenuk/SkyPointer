@@ -15,7 +15,6 @@ The product uses two motors:
 - A **servo motor** moves the pointer up or down to show how high the plane is in the sky.
 
 When SkyPointer starts, the user first points it to **North**. After 30 seconds, the system saves that position and starts searching for nearby planes.
-
 The goal is to make plane spotting easier because the user can simply follow the pointer and know where to look.
 
 ### System flow
@@ -27,7 +26,6 @@ The goal is to make plane spotting easier because the user can simply follow the
 ## Parts needed to create this
 
 To build SkyPointer you need the following parts:
-
 - NodeMCU ESP8266
 - 28BYJ-48 5V stepper motor
 - ULN2003 stepper driver board
@@ -36,7 +34,6 @@ To build SkyPointer you need the following parts:
 - Jumper wires / breadboard
 - Wi-Fi or phone hotspot
 - Arduino IDE
-
 ### Main components
 
 <table>
