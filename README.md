@@ -23,7 +23,9 @@ The goal is to make plane spotting easier because the user can simply follow the
 
 ### System flow
 
-`Flight API → NodeMCU → Calculate direction and height → Stepper motor → Servo motor → Pointer`
+![System flow](systemflow.png)
+
+---
 
 ---
 
