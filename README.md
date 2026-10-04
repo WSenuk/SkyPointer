@@ -14,7 +14,7 @@ The product uses two motors:
 - A **stepper motor** turns the pointer left or right to show the direction of the plane.
 - A **servo motor** moves the pointer up or down to show how high the plane is in the sky.
 
-When SkyPointer starts, the user first points it to **North**. After 30 seconds, the system saves that position and starts searching for nearby planes.
+When SkyPointer starts, the user first points it to North. After 30 seconds, the system saves that position and starts searching for nearby planes.
 
 The goal is to make plane spotting easier because the user can simply follow the pointer and know where to look.
 
@@ -52,7 +52,7 @@ To build SkyPointer you need the following parts:
   </tr>
 </table>
 
-The **ULN2003 driver board** is used between the NodeMCU and the stepper motor. The 28BYJ-48 stepper motor normally plugs directly into this driver board.
+The ULN2003 driver board is used between the NodeMCU and the stepper motor. The 28BYJ-48 stepper motor normally plugs directly into this driver board.
 
 ### Where to buy the parts
 You can buy these parts from electronics shops such as TinyTronics or Conrad.
@@ -62,7 +62,7 @@ You can buy these parts from electronics shops such as TinyTronics or Conrad.
 - **SG90 9g Servo Motor:** [TinyTronics](https://www.tinytronics.nl/en/mechanics-and-actuators/motors/servomotors/sg90-mini-servo)
 - **External power supply:** [TinyTronics adjustable power supply](https://www.tinytronics.nl/nl/power/voedingen/12v/goobay-64570-universele-voedingsadapter-verstelbaar-3-12v-2.25a)
 
-> You do not have to buy exactly these products. Similar components with the same specifications can also be used.
+You do not have to buy exactly these products. Similar components with the same specifications can also be used.
 
 ### Getting the 5V power supply
 The stepper motor and servo need their own power supply.
@@ -77,7 +77,7 @@ The positive **5V** connection will later be connected to the stepper motor driv
 
 The **GND** connection will also be connected to the NodeMCU so that all parts share the same ground.
 
-The exact wiring is explained later in the **Wiring** section.
+The exact wiring is explained later in the wiring section.
 
 ---
 
