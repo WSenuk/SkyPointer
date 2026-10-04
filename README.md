@@ -1,6 +1,6 @@
 # SkyPointer
 
-## Flight tracking device for hobbyists
+**Flight tracking device for hobbyists**
 
 Simple build guide for the SkyPointer prototype.
 
@@ -24,6 +24,7 @@ The goal is to make plane spotting easier because the user can simply follow the
 ### System flow
 
 ![System flow](images/systemflow.png)
+
 ---
 
 ## Parts needed to create this
@@ -59,11 +60,10 @@ To build SkyPointer you need the following parts:
 </table>
 
 The **ULN2003 driver board** is used between the NodeMCU and the stepper motor.
+
 The 28BYJ-48 stepper motor normally plugs directly into this driver board.
 
----
-
-## Where to buy the parts
+### Where to buy the parts
 
 You can buy these parts from electronics shops such as TinyTronics or Conrad.
 
@@ -81,9 +81,7 @@ You can buy these parts from electronics shops such as TinyTronics or Conrad.
 
 > You do not have to buy exactly these products. Similar components with the same specifications can also be used.
 
----
-
-## Getting the 5V power supply
+### Getting the 5V power supply
 
 The stepper motor and servo need their own power supply.
 
@@ -93,8 +91,50 @@ For this prototype you can use an external power supply of around:
 
 **5V and 1–2A**
 
-An adjustable power adapter can also be used. Make sure it is set to **5V before connecting it to the prototype**.
+An adjustable power supply can also be used. Before connecting it to the prototype, make sure it is set to **5V**.
 
-Some power adapters include a screw-terminal connector. This makes it easier to connect jumper wires to the positive and negative outputs.
+The positive **5V** connection will later be connected to the stepper motor driver and the servo motor.
 
+The **GND** connection will also be connected to the NodeMCU so that all parts share the same ground.
 
+The exact wiring is explained later in the **Wiring** section.
+
+---
+
+## Software setup
+
+### Install the ESP8266 board package
+
+### Install ArduinoJson
+
+### Install AccelStepper
+
+### Adjusting the code
+
+---
+
+## Wiring
+
+### Connecting the stepper motor
+
+### Connecting the servo motor
+
+### Connecting the 5V power supply
+
+---
+
+## Testing the prototype
+
+### Testing the flight data
+
+### Testing the stepper motor
+
+### Testing the servo motor
+
+---
+
+## Problems and solutions
+
+---
+
+## Sources
