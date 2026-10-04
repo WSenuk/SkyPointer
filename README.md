@@ -718,6 +718,7 @@ float calculateBearing(
   return bearing;
 }
 ```
+</details>
 #### Adding Wifi
 Once the code is copied in. We need to connect the NodeMCU with your wifi. The NodeMCU works with a 2.4ghz connection. Turn on the hotspot on your phone so that the NodeMCU can connect to it. 
 We need to give it access to your wifi credentials. Add your wifi name and password between the brackets( "YOUR_WIFI_NAME", "YOUR_WIFI_PASSWORD" ).
@@ -725,7 +726,34 @@ We need to give it access to your wifi credentials. Add your wifi name and passw
 #define WIFI_SSID "YOUR_WIFI_NAME"
 #define WIFI_PASSWORD "YOUR_WIFI_PASSWORD"
 ```
+#### Adding your location
+We are using ADSB.lol to help us track the flight.ADSB.lol is a community-driven, open-source flight tracking platform that provides unfiltered, live aviation data to the public.
+Unlike commercial flight trackers that block or hide certain aircraft, ADSB.lol is completely unfiltered. It relies on a global network of volunteers who use small, low-cost antenna setups to pick up ADS-B (Automatic Dependent Surveillance-Broadcast) signals broadcasted by airplanes.
+We are using its free API.
 
+In order for it to work, we need to add our location in. We need to add your latitude and longitude. Head to Google Maps select the location that you want to track. Select and location and right click the to get the latitude and longitude.
+![latitude and longitude](images/location.png)
+
+Look for:
+```cpp
+const float MY_LAT = 00.000000;
+const float MY_LON = 0.000000;
+```
+And now change it to your own values. 
+```cpp
+const float MY_LAT = 52.359222;
+const float MY_LON = 4.908967;
+```
+## Testing the code
+Now that we got our own credentials in. We could test out if it picks everything up and if the code that you changed works. 
+Plug in your NodeMCU and send the code to it. Turn on your hotspot as well.
+On the top left there in and arrow symbol. If you hover over it, it will give u the option to upload it. Click it to send it to the arduino.
+![Uploading the code](images/upload.png)
+There is a chance that you might get an error code saying that it couldn't find the COM port.
+![Uploading the code](images/uploaderror.png)
+How to fix is by selecting the right COM port above. There is a drop down on the top left of the ArduinoIDE. Click on it and you can see what ports are being used. Select the right port.
+![Right Port Selection](images/comportselection.png)
+Now send it again. 
 ## Wiring
 
 ### Connecting the stepper motor
