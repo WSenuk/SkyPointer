@@ -869,25 +869,32 @@ If both motors move and point in the expected direction, the prototype is workin
 ---
 
 ## Problems and solutions
-
+While working on SkyPointer, we also ran into a few problems ourselves.
+### COM port error
+We encountered a problem where Arduino IDE could not find the correct COM port.
+To fix it, click the port menu at the top of Arduino IDE and select the port connected to the NodeMCU.
+After selecting the correct port, upload the code again.
+### Serial Monitor problem
+We also had a problem with the Serial Monitor while testing the flight data.
+Make sure the Serial Monitor is set to **115200 baud**.
+Also check that the correct COM port is selected.
 ### NodeMCU does not connect to Wi-Fi
 Check if the Wi-Fi name and password are correct.
 Also make sure you are using a **2.4 GHz** Wi-Fi network.
 ### No plane is found
 Check if your internet connection works.
-You can also try increasing the search radius in the code.
+You can also increase the search radius in the code.
 Look for:
-
 ```cpp
 const int RADIUS = 50;
 ```
-Increase the radius till you it detects something. 
+Increase the radius until SkyPointer detects a plane.
 ### Stepper motor does not move
-Check if the ULN2003 board has power and if D1, D2, D5 and D6 are connected correctly.
+Check if the ULN2003 board has power and if **D1, D2, D5 and D6** are connected correctly.
 Also check if the stepper motor is plugged into the white connector.
 ### Servo motor does not move
 Check if the servo signal wire is connected to **D7**.
-Also check the 5V and GND connections.
+Also check the **5V and GND** connections.
 ### NodeMCU keeps restarting
 This is usually a power problem.
 Make sure the motors use the external **5V power supply** and not the NodeMCU 3.3V pin.
