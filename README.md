@@ -872,6 +872,8 @@ After that, the system should find the closest aircraft and move:
 - the **stepper motor** left or right to show the direction
 - the **servo motor** up or down to show how high to look
 If both motors move and point in the expected direction, the prototype is working.
+
+<img src="images/oritentation.png" width="400">
 ---
 
 ## Problems and solutions
