@@ -120,7 +120,9 @@ Click on **File** in the top-left corner of the Arduino IDE.
 Then click **New Sketch**.
 This will open a new place where you can add your code.
 Copy the code below and paste it into the new sketch.
-
+<details>
+<summary><b>Click here to show the SkyPointer code</b></summary>
+  
 ```cpp
 #include <ESP8266WiFi.h>
 #include <WiFiClientSecure.h>
