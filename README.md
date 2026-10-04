@@ -81,12 +81,18 @@ I have added a PDF guide that explains how to install the Arduino IDE and how to
 Now we can start with the Arduino program.
 Open the **Arduino IDE**.
 On the left side you will see an icon that looks like a group of books. Click on this icon to open the **Library Manager**
+
 ![Open the Library Manager](images/arduinojson-1.png)
+
 In the search bar, search for **ArduinoJson by Benoit Blanchon**.
 ArduinoJson is used to read the aircraft data that comes from the API.
+
 ![Search for ArduinoJson](images/arduinojson-2.png)
+
 Click **Install**.
+
 ![Install ArduinoJson](images/arduinojson-3.png)
+
 ArduinoJson is now installed.
 
 ### Install AccelStepper
