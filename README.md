@@ -719,6 +719,7 @@ float calculateBearing(
 }
 ```
 </details>
+
 #### Adding Wi-Fi
 
 Once the code is copied in, we need to connect the NodeMCU to your Wi-Fi.
@@ -761,7 +762,24 @@ There is a chance that you might get an error code saying that it couldn't find 
 ![Uploading the code](images/uploaderror.png)
 How to fix is by selecting the right COM port above. There is a drop down on the top left of the ArduinoIDE. Click on it and you can see what ports are being used. Select the right port.
 ![Right Port Selection](images/comportselection.png)
-Now send it again. 
+Now send it again. Once done uploading, it will say that it is resetting the pins. That means it has uploaded it. 
+![Done uploading](images/doneuploading.png)
+
+#### Serial monitor
+We can now check to see if everything is working. We have to start by opening serial monitor. On the top right there is an icon that looks like a magnifying glass. Click on it. 
+![Opening Serial Monitor](images/openingserialmonitor.png)
+Once it is opened, we need to fix the baud rate. Normally it is set to 9600 baud but we need to switch it to 115200 baud. Click the drop down button and change  it to it. 
+![Fixing the baud rate](images/fixingserialmonitor.png)
+After changing it, upload the code again if nothing pops up. 
+![Fixing the baud rate](images/fixingserialmonitor.png)
+
+#### Working
+If everything went well. You can read off the serial monitor that it is connected to the wifi and it is picks out planes that are close to you. 
+![Connected system ](images/wificonnected.png)
+![Plane info ](images/planeinfo.png)
+You can check https://adsb.lol/ to see if this pick up is accurate.
+![Plane info 2 ](images/planeinfo.png)
+
 ## Wiring
 
 ### Connecting the stepper motor
