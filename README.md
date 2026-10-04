@@ -884,6 +884,12 @@ Also make sure you are using a **2.4 GHz** Wi-Fi network.
 ### No plane is found
 Check if your internet connection works.
 You can also try increasing the search radius in the code.
+Look for:
+
+```cpp
+const int RADIUS = 50;
+```
+Increase the radius till you it detects something. 
 ### Stepper motor does not move
 Check if the ULN2003 board has power and if D1, D2, D5 and D6 are connected correctly.
 Also check if the stepper motor is plugged into the white connector.
@@ -895,3 +901,11 @@ This is usually a power problem.
 Make sure the motors use the external **5V power supply** and not the NodeMCU 3.3V pin.
 
 ## Sources
+These sources were used for the code, libraries and flight data:
+- [ADSB.lol API](https://api.adsb.lol/docs)
+- [ArduinoJson](https://arduinojson.org/)
+- [AccelStepper](https://www.airspayce.com/mikem/arduino/AccelStepper/)
+- [ESP8266 Arduino Core](https://arduino-esp8266.readthedocs.io/)
+These websites helped with setting up the NodeMCU, reading the API data and controlling the motors.
+The AI was used to help write and adjust parts of the code. The code was tested during the project, but mistakes can still happen.
+Always check the code and wiring before using the prototype.
