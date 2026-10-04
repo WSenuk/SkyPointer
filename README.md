@@ -861,9 +861,11 @@ Before testing, place the motors in their starting positions.
 ### Stepper motor
 Point the stepper motor to **North** before the 30 second setup starts.
 If your stepper motor does not have a plastic pointer piece, attach something simple to the shaft so you can clearly see which direction it is pointing.
+![Stepper motor pointer](images/stepperarm.png)
 ### Servo motor
 Place the servo in its starting position so the pointer is facing straight forward.
 Attach one of the small plastic servo arms that comes with the servo. This makes it easier to see the up and down movement.
+![Stepper motor pointer](images/servoarm.png)
 ### Test
 Turn on SkyPointer and let it complete the 30 second North setup.
 After that, the system should find the closest aircraft and move:
