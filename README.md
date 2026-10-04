@@ -718,6 +718,14 @@ float calculateBearing(
   return bearing;
 }
 ```
+#### Adding Wifi
+Once the code is copied in. We need to connect the NodeMCU with your wifi. The NodeMCU works with a 2.4ghz connection. Turn on the hotspot on your phone so that the NodeMCU can connect to it. 
+We need to give it access to your wifi credentials. Add your wifi name and password between the brackets( "YOUR_WIFI_NAME", "YOUR_WIFI_PASSWORD" ).
+```cpp
+#define WIFI_SSID "YOUR_WIFI_NAME"
+#define WIFI_PASSWORD "YOUR_WIFI_PASSWORD"
+```
+
 ## Wiring
 
 ### Connecting the stepper motor
