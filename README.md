@@ -9,11 +9,8 @@ Simple build guide for the SkyPointer prototype.
 ## What is SkyPointer?
 
 SkyPointer is a small physical flight tracker for people who like watching airplanes.
-
 It uses live flight data from an online API to find the closest plane near the user. The NodeMCU reads this data and calculates where the plane is.
-
 The product uses two motors:
-
 - A **stepper motor** turns the pointer left or right to show the direction of the plane.
 - A **servo motor** moves the pointer up or down to show how high the plane is in the sky.
 
@@ -104,15 +101,39 @@ The exact wiring is explained later in the **Wiring** section.
 ## Software setup
 
 ### Install the ESP8266 board package
-Before we start, we need to install the Arduino IDE and have the NodeMCU connected with it. I have uploaded a PDF file for a guide on how to install the IDE and on how to connect the NodeMCU with your device.
+
+Before we start, we need to install the Arduino IDE and connect the NodeMCU to the computer.
+
+I have added a PDF guide that explains how to install the Arduino IDE and how to connect the NodeMCU to your device.
+
+---
 
 ### Install ArduinoJson
-Its time to start with the Arduino program. Once you have it opened. There is an icon on the left that looks like a bunch of books placed next to each other. Click on that to search the libraries. 
-![clicking on the libraries ](images/arduinojson 1.png)
-![searching in the libraries ](images/arduinojson 2.png)
-Search for ArduinoJson — by Benoit Blanchon Used to read the aircraft data from the API.
-Click on install. 
-![installing the libraries ](images/arduinojson 3.png)
+
+Now we can start with the Arduino program.
+
+Open the **Arduino IDE**.
+
+On the left side you will see an icon that looks like a group of books. Click on this icon to open the **Library Manager**.
+
+![Open the Library Manager](images/arduinojson-1.png)
+
+In the search bar, search for:
+
+**ArduinoJson by Benoit Blanchon**
+
+![Search for ArduinoJson](images/arduinojson-2.png)
+
+ArduinoJson is used to read the aircraft data that comes from the API.
+
+Click **Install**.
+
+![Install ArduinoJson](images/arduinojson-3.png)
+
+ArduinoJson is now installed.
+
+---
+
 ### Install AccelStepper
 
 ### Adjusting the code
