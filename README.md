@@ -26,53 +26,75 @@ The goal is to make plane spotting easier because the user can simply follow the
 ![System flow](images/systemflow.png)
 ---
 
+## Parts needed to create this
+
+To build SkyPointer you need the following parts:
+
+- NodeMCU ESP8266
+- 28BYJ-48 5V stepper motor
+- ULN2003 stepper driver board
+- 1× 9g positional servo
+- External regulated 5V power supply, around 1–2A
+- Jumper wires / breadboard
+- Wi-Fi or phone hotspot
+- Arduino IDE
+
+### Main components
+
+<table>
+  <tr>
+    <td align="center">
+      <img src="images/nodemcu.png" width="220"><br>
+      <b>NodeMCU ESP8266</b>
+    </td>
+    <td align="center">
+      <img src="images/stepper-motor.png" width="220"><br>
+      <b>28BYJ-48 Stepper Motor</b>
+    </td>
+    <td align="center">
+      <img src="images/servo.png" width="220"><br>
+      <b>9g Servo Motor</b>
+    </td>
+  </tr>
+</table>
+
+The **ULN2003 driver board** is used between the NodeMCU and the stepper motor.
+The 28BYJ-48 stepper motor normally plugs directly into this driver board.
+
+---
+
 ## Where to buy the parts
 
-You can buy the main components from electronics stores such as
-TinyTronics and Conrad.
+You can buy these parts from electronics shops such as TinyTronics or Conrad.
 
-- **NodeMCU ESP8266:** [Buy here](PASTE_NODEMCU_LINK_HERE)
-- **28BYJ-48 + ULN2003 driver:** [Buy here](PASTE_STEPPER_LINK_HERE)
-- **SG90 9g Servo:** [Buy here](PASTE_SERVO_LINK_HERE)
-- **5V Power Supply:** [Buy here](PASTE_POWER_LINK_HERE)
+- **NodeMCU ESP8266:**  
+  [TinyTronics](https://www.tinytronics.nl/en/development-boards/microcontroller-boards/with-wi-fi/esp8266-nodemcu-v2)
 
-> You do not have to buy exactly these products. Similar parts with
-> the same specifications can also be used.
+- **28BYJ-48 Stepper Motor + ULN2003 driver:**  
+  [Conrad](https://www.conrad.nl/nl/p/whadda-wpi401-stappenmotorbesturingsmodule-geschikt-voor-serie-arduino-1-stuk-s-2330784.html)
+
+- **SG90 9g Servo Motor:**  
+  [TinyTronics](https://www.tinytronics.nl/en/mechanics-and-actuators/motors/servomotors/sg90-mini-servo)
+
+- **External power supply:**  
+  [TinyTronics adjustable power supply](https://www.tinytronics.nl/nl/power/voedingen/12v/goobay-64570-universele-voedingsadapter-verstelbaar-3-12v-2.25a)
+
+> You do not have to buy exactly these products. Similar components with the same specifications can also be used.
 
 ---
 
 ## Getting the 5V power supply
 
-The stepper motor and servo need more power than the NodeMCU should
-provide directly.
+The stepper motor and servo need their own power supply.
 
-For this project I use an external **5V power supply**.
+The NodeMCU should not power both motors directly because the motors can use more current than the NodeMCU can safely provide.
 
-A power supply of around **5V and 2A** is enough for this prototype.
+For this prototype you can use an external power supply of around:
 
-The power supply I recommend can be adjusted to different voltages.
-Before connecting it to SkyPointer, make sure it is set to:
+**5V and 1–2A**
 
-**5V**
+An adjustable power adapter can also be used. Make sure it is set to **5V before connecting it to the prototype**.
 
-The adapter also comes with a screw-terminal connector. This makes it
-easy to connect jumper wires to the power supply.
+Some power adapters include a screw-terminal connector. This makes it easier to connect jumper wires to the positive and negative outputs.
 
-### Connect the power supply
 
-Connect the positive **+5V** wire to:
-
-- ULN2003 VCC
-- Servo red wire
-
-Connect the negative **GND** wire to:
-
-- ULN2003 GND
-- Servo brown/black wire
-- NodeMCU GND
-
-The NodeMCU can stay connected to the computer using its USB cable.
-
-> **Important:** Do not connect the external 5V supply to the NodeMCU
-> 3.3V pin. Always check that the power supply is set to 5V before
-> connecting the motors.
