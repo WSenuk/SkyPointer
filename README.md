@@ -878,6 +878,20 @@ If both motors move and point in the expected direction, the prototype is workin
 
 ## Problems and solutions
 
----
+### NodeMCU does not connect to Wi-Fi
+Check if the Wi-Fi name and password are correct.
+Also make sure you are using a **2.4 GHz** Wi-Fi network.
+### No plane is found
+Check if your internet connection works.
+You can also try increasing the search radius in the code.
+### Stepper motor does not move
+Check if the ULN2003 board has power and if D1, D2, D5 and D6 are connected correctly.
+Also check if the stepper motor is plugged into the white connector.
+### Servo motor does not move
+Check if the servo signal wire is connected to **D7**.
+Also check the 5V and GND connections.
+### NodeMCU keeps restarting
+This is usually a power problem.
+Make sure the motors use the external **5V power supply** and not the NodeMCU 3.3V pin.
 
 ## Sources
