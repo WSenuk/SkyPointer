@@ -1,5 +1,4 @@
 # SkyPointer
-
 **Flight tracking device for hobbyists**
 
 Simple build guide for the SkyPointer prototype.
@@ -7,24 +6,24 @@ Simple build guide for the SkyPointer prototype.
 ---
 
 ## What is SkyPointer?
-
 SkyPointer is a small physical flight tracker for people who like watching airplanes.
+
 It uses live flight data from an online API to find the closest plane near the user. The NodeMCU reads this data and calculates where the plane is.
+
 The product uses two motors:
 - A **stepper motor** turns the pointer left or right to show the direction of the plane.
 - A **servo motor** moves the pointer up or down to show how high the plane is in the sky.
 
 When SkyPointer starts, the user first points it to **North**. After 30 seconds, the system saves that position and starts searching for nearby planes.
+
 The goal is to make plane spotting easier because the user can simply follow the pointer and know where to look.
 
 ### System flow
-
 ![System flow](images/systemflow.png)
 
 ---
 
 ## Parts needed to create this
-
 To build SkyPointer you need the following parts:
 - NodeMCU ESP8266
 - 28BYJ-48 5V stepper motor
@@ -34,8 +33,8 @@ To build SkyPointer you need the following parts:
 - Jumper wires / breadboard
 - Wi-Fi or phone hotspot
 - Arduino IDE
-### Main components
 
+### Main components
 <table>
   <tr>
     <td align="center">
@@ -53,37 +52,24 @@ To build SkyPointer you need the following parts:
   </tr>
 </table>
 
-The **ULN2003 driver board** is used between the NodeMCU and the stepper motor.
-
-The 28BYJ-48 stepper motor normally plugs directly into this driver board.
+The **ULN2003 driver board** is used between the NodeMCU and the stepper motor. The 28BYJ-48 stepper motor normally plugs directly into this driver board.
 
 ### Where to buy the parts
-
 You can buy these parts from electronics shops such as TinyTronics or Conrad.
 
-- **NodeMCU ESP8266:**  
-  [TinyTronics](https://www.tinytronics.nl/en/development-boards/microcontroller-boards/with-wi-fi/esp8266-nodemcu-v2)
-
-- **28BYJ-48 Stepper Motor + ULN2003 driver:**  
-  [Conrad](https://www.conrad.nl/nl/p/whadda-wpi401-stappenmotorbesturingsmodule-geschikt-voor-serie-arduino-1-stuk-s-2330784.html)
-
-- **SG90 9g Servo Motor:**  
-  [TinyTronics](https://www.tinytronics.nl/en/mechanics-and-actuators/motors/servomotors/sg90-mini-servo)
-
-- **External power supply:**  
-  [TinyTronics adjustable power supply](https://www.tinytronics.nl/nl/power/voedingen/12v/goobay-64570-universele-voedingsadapter-verstelbaar-3-12v-2.25a)
+- **NodeMCU ESP8266:** [TinyTronics](https://www.tinytronics.nl/en/development-boards/microcontroller-boards/with-wi-fi/esp8266-nodemcu-v2)
+- **28BYJ-48 Stepper Motor + ULN2003 driver:** [Conrad](https://www.conrad.nl/nl/p/whadda-wpi401-stappenmotorbesturingsmodule-geschikt-voor-serie-arduino-1-stuk-s-2330784.html)
+- **SG90 9g Servo Motor:** [TinyTronics](https://www.tinytronics.nl/en/mechanics-and-actuators/motors/servomotors/sg90-mini-servo)
+- **External power supply:** [TinyTronics adjustable power supply](https://www.tinytronics.nl/nl/power/voedingen/12v/goobay-64570-universele-voedingsadapter-verstelbaar-3-12v-2.25a)
 
 > You do not have to buy exactly these products. Similar components with the same specifications can also be used.
 
 ### Getting the 5V power supply
-
 The stepper motor and servo need their own power supply.
 
 The NodeMCU should not power both motors directly because the motors can use more current than the NodeMCU can safely provide.
 
-For this prototype you can use an external power supply of around:
-
-**5V and 1–2A**
+For this prototype you can use an external power supply of around **5V and 1–2A**.
 
 An adjustable power supply can also be used. Before connecting it to the prototype, make sure it is set to **5V**.
 
@@ -98,15 +84,11 @@ The exact wiring is explained later in the **Wiring** section.
 ## Software setup
 
 ### Install the ESP8266 board package
-
 Before we start, we need to install the Arduino IDE and connect the NodeMCU to the computer.
 
 I have added a PDF guide that explains how to install the Arduino IDE and how to connect the NodeMCU to your device.
 
----
-
 ### Install ArduinoJson
-
 Now we can start with the Arduino program.
 
 Open the **Arduino IDE**.
@@ -115,9 +97,7 @@ On the left side you will see an icon that looks like a group of books. Click on
 
 ![Open the Library Manager](images/arduinojson-1.png)
 
-In the search bar, search for:
-
-**ArduinoJson by Benoit Blanchon**
+In the search bar, search for **ArduinoJson by Benoit Blanchon**.
 
 ![Search for ArduinoJson](images/arduinojson-2.png)
 
@@ -128,8 +108,6 @@ Click **Install**.
 ![Install ArduinoJson](images/arduinojson-3.png)
 
 ArduinoJson is now installed.
-
----
 
 ### Install AccelStepper
 
