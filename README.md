@@ -39,10 +39,16 @@ You need:
 - Wi-Fi or phone hotspot
 - Arduino IDE
 
-/images/nodemcu.png
-NodeMCU ESP8266
-/images/stepper-motor.png
-28BYJ-48 5V stepper motor
-ULN2003 stepper driver board
-/images/servo.png
-1× 9g positional servo
+### NodeMCU ESP8266
+
+![NodeMCU ESP8266](images/nodemcu.png)
+
+### 28BYJ-48 5V Stepper Motor
+
+![28BYJ-48 Stepper Motor](images/stepper-motor.png)
+
+### 9g Positional Servo
+
+![9g Servo Motor](images/servo.png)
+
+
