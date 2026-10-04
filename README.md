@@ -867,9 +867,9 @@ Connect the **GND** output from the power supply to:
 
 The NodeMCU can still be powered with the USB cable connected to your computer.
 
-> **Important:** The GND from the external power supply and the GND from the NodeMCU must be connected together. This makes sure all parts use the same ground.
+**Important:** The GND from the external power supply and the GND from the NodeMCU must be connected together. This makes sure all parts use the same ground.
 
-> **Important:** Do not connect the stepper motor or servo to the NodeMCU 3.3V pin.
+**Important:** Do not connect the stepper motor or servo to the NodeMCU 3.3V pin.
 
 ### Complete wiring overview
 
@@ -890,24 +890,9 @@ The **28BYJ-48 stepper motor** plugs directly into the white connector on the UL
 
 ### Wiring diagram
 
-The image below shows how all the parts are connected.
-
 ![SkyPointer wiring diagram](images/wiring-diagram.png)
 
 After everything is connected, check all the wires again before turning the prototype on.
-
-Make sure:
-
-- D1 is connected to IN1.
-- D2 is connected to IN2.
-- D5 is connected to IN3.
-- D6 is connected to IN4.
-- D7 is connected to the servo signal.
-- The stepper motor is connected to the ULN2003 board.
-- The servo and ULN2003 are powered with 5V.
-- All GND connections are connected together.
-
-Once everything is correct, you can continue with testing the full prototype.
 ---
 
 ## Testing the prototype
