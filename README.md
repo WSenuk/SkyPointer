@@ -98,10 +98,9 @@ On the left side you will see an icon that looks like a group of books. Click on
 ![Open the Library Manager](images/arduinojson-1.png)
 
 In the search bar, search for **ArduinoJson by Benoit Blanchon**.
+ArduinoJson is used to read the aircraft data that comes from the API.
 
 ![Search for ArduinoJson](images/arduinojson-2.png)
-
-ArduinoJson is used to read the aircraft data that comes from the API.
 
 Click **Install**.
 
@@ -110,10 +109,612 @@ Click **Install**.
 ArduinoJson is now installed.
 
 ### Install AccelStepper
+Search for AccelStepper — by Mike McCauley Used to control the 28BYJ-48 stepper motor.
+Click on install. 
+![Install AccelStepper](images/accelstepper.png)
 
 ### Adjusting the code
+Now that the libraries are installed, we need to adjust the code so it uses your Wi-Fi and your current location.
+#### The Code
+Click on **File** in the top-left corner of the Arduino IDE.
+Then click **New Sketch**.
+This will open a new place where you can add your code.
+Copy the code below and paste it into the new sketch.
 
----
+```cpp
+#include <ESP8266WiFi.h>
+#include <WiFiClientSecure.h>
+#include <ESP8266HTTPClient.h>
+#include <ArduinoJson.h>
+#include <AccelStepper.h>
+#include <Servo.h>
+
+// =====================================================
+// WIFI
+// =====================================================
+
+#define WIFI_SSID "YOUR_WIFI_NAME"
+#define WIFI_PASSWORD "YOUR_WIFI_PASSWORD"
+
+
+// =====================================================
+// YOUR LOCATION
+// =====================================================
+
+const float MY_LAT = 52.049380;
+const float MY_LON = 5.278542;
+
+// Search radius in nautical miles
+const int RADIUS = 50;
+
+
+// =====================================================
+// STEPPER MOTOR
+// 28BYJ-48 + ULN2003
+// =====================================================
+
+#define IN1 D1
+#define IN2 D2
+#define IN3 D5
+#define IN4 D6
+
+// Around one full rotation
+const long STEPS_PER_REVOLUTION = 4096;
+
+AccelStepper directionStepper(
+  AccelStepper::HALF4WIRE,
+  IN1,
+  IN3,
+  IN2,
+  IN4
+);
+
+
+// =====================================================
+// SERVO MOTOR
+// =====================================================
+
+Servo skyServo;
+
+
+// =====================================================
+// INTERNET
+// =====================================================
+
+WiFiClientSecure client;
+
+
+// =====================================================
+// SETUP
+// =====================================================
+
+void setup()
+{
+  Serial.begin(115200);
+  Serial.println();
+
+  // ---------------------------------
+  // STEPPER SETUP
+  // ---------------------------------
+
+  directionStepper.setMaxSpeed(500);
+  directionStepper.setAcceleration(300);
+
+  // Release the stepper motor
+  // so the pointer can be set to North
+  directionStepper.disableOutputs();
+
+
+  // ---------------------------------
+  // SERVO SETUP
+  // ---------------------------------
+
+  skyServo.attach(D7);
+
+  // Start at the horizon
+  skyServo.write(0);
+
+
+  // ---------------------------------
+  // CONNECT TO WIFI
+  // ---------------------------------
+
+  Serial.print("Connecting to WiFi");
+
+  WiFi.begin(WIFI_SSID, WIFI_PASSWORD);
+
+  while (WiFi.status() != WL_CONNECTED)
+  {
+    delay(500);
+    Serial.print(".");
+  }
+
+  Serial.println();
+  Serial.println("WiFi connected!");
+
+  client.setInsecure();
+
+
+  // =================================================
+  // NORTH SETUP
+  // =================================================
+
+  Serial.println();
+  Serial.println("=========================");
+  Serial.println("POINT THE ARROW NORTH");
+  Serial.println("=========================");
+  Serial.println();
+  Serial.println("Turn the pointer so it");
+  Serial.println("points North.");
+  Serial.println();
+  Serial.println("You have 30 seconds.");
+  Serial.println();
+
+
+  // 30 second countdown
+  for (int i = 30; i > 0; i--)
+  {
+    Serial.print("Starting in ");
+    Serial.print(i);
+    Serial.println(" seconds");
+
+    delay(1000);
+  }
+
+
+  // Current position becomes North
+  directionStepper.setCurrentPosition(0);
+
+  // Turn stepper motor back on
+  directionStepper.enableOutputs();
+
+
+  Serial.println();
+  Serial.println("=========================");
+  Serial.println("NORTH SAVED!");
+  Serial.println("0 degrees = North");
+  Serial.println("=========================");
+  Serial.println();
+
+  delay(1000);
+
+  Serial.println("Searching for closest plane...");
+}
+
+
+// =====================================================
+// LOOP
+// =====================================================
+
+void loop()
+{
+  if (WiFi.status() == WL_CONNECTED)
+  {
+    getClosestPlane();
+  }
+
+  Serial.println();
+  Serial.println("Next update in 30 seconds...");
+  Serial.println();
+
+  delay(30000);
+}
+
+
+// =====================================================
+// GET CLOSEST PLANE
+// =====================================================
+
+void getClosestPlane()
+{
+  HTTPClient https;
+
+  String url =
+    "https://api.adsb.lol/v2/closest/" +
+    String(MY_LAT, 6) + "/" +
+    String(MY_LON, 6) + "/" +
+    String(RADIUS);
+
+  Serial.println();
+  Serial.println("Searching for closest plane...");
+
+  if (https.begin(client, url))
+  {
+    int httpCode = https.GET();
+
+
+    // ---------------------------------
+    // API WORKED
+    // ---------------------------------
+
+    if (httpCode == 200)
+    {
+      String payload = https.getString();
+
+      DynamicJsonDocument doc(8192);
+
+      DeserializationError error =
+        deserializeJson(doc, payload);
+
+
+      // JSON ERROR
+      if (error)
+      {
+        Serial.println("JSON error!");
+
+        https.end();
+        return;
+      }
+
+
+      JsonArray aircraft = doc["ac"];
+
+
+      // ---------------------------------
+      // PLANE FOUND
+      // ---------------------------------
+
+      if (aircraft.size() > 0)
+      {
+        JsonObject plane = aircraft[0];
+
+
+        // ---------------------------------
+        // PLANE DATA
+        // ---------------------------------
+
+        const char* callsign =
+          plane["flight"] | "Unknown";
+
+        const char* registration =
+          plane["r"] | "Unknown";
+
+        const char* type =
+          plane["t"] | "Unknown";
+
+        float planeLat =
+          plane["lat"] | 0.0;
+
+        float planeLon =
+          plane["lon"] | 0.0;
+
+        float speed =
+          plane["gs"] | 0.0;
+
+
+        // =================================================
+        // ALTITUDE
+        // =================================================
+
+        float altitudeFeet = 0;
+
+        if (plane["alt_baro"].is<const char*>())
+        {
+          String altitudeText =
+            plane["alt_baro"].as<const char*>();
+
+          if (altitudeText == "ground")
+          {
+            altitudeFeet = 0;
+          }
+        }
+        else
+        {
+          altitudeFeet =
+            plane["alt_baro"] | 0.0;
+        }
+
+
+        // =================================================
+        // DISTANCE
+        // =================================================
+
+        float distanceKm =
+          calculateDistance(
+            MY_LAT,
+            MY_LON,
+            planeLat,
+            planeLon
+          );
+
+
+        // =================================================
+        // DIRECTION / BEARING
+        // =================================================
+
+        float bearing =
+          calculateBearing(
+            MY_LAT,
+            MY_LON,
+            planeLat,
+            planeLon
+          );
+
+
+        // =================================================
+        // SKY ELEVATION
+        // =================================================
+
+        float altitudeMeters =
+          altitudeFeet * 0.3048;
+
+        float distanceMeters =
+          distanceKm * 1000;
+
+        float elevationAngle =
+          atan2(
+            altitudeMeters,
+            distanceMeters
+          ) * 180.0 / PI;
+
+
+        elevationAngle =
+          constrain(
+            elevationAngle,
+            0,
+            90
+          );
+
+
+        // =================================================
+        // MOVE DIRECTION STEPPER
+        // =================================================
+
+        moveStepperToBearing(bearing);
+
+
+        // =================================================
+        // MOVE SKY SERVO
+        // =================================================
+
+        int skyAngle =
+          (int)elevationAngle;
+
+        skyServo.write(skyAngle);
+
+
+        // =================================================
+        // SERIAL MONITOR
+        // =================================================
+
+        Serial.println();
+        Serial.println("-------------------------");
+        Serial.println("CLOSEST AIRCRAFT");
+        Serial.println("-------------------------");
+
+        Serial.print("Callsign: ");
+        Serial.println(callsign);
+
+        Serial.print("Registration: ");
+        Serial.println(registration);
+
+        Serial.print("Aircraft type: ");
+        Serial.println(type);
+
+        Serial.print("Altitude: ");
+        Serial.print(altitudeFeet);
+        Serial.println(" ft");
+
+        Serial.print("Speed: ");
+        Serial.print(speed);
+        Serial.println(" knots");
+
+        Serial.println();
+
+        Serial.print("Distance: ");
+        Serial.print(distanceKm);
+        Serial.println(" km");
+
+        Serial.print("Bearing from North: ");
+        Serial.print(bearing);
+        Serial.println(" degrees");
+
+        Serial.print("Sky elevation: ");
+        Serial.print(elevationAngle);
+        Serial.println(" degrees");
+
+        Serial.println();
+
+        Serial.print("Stepper points to: ");
+        Serial.print(bearing);
+        Serial.println(" degrees");
+
+        Serial.print("Sky servo: ");
+        Serial.print(skyAngle);
+        Serial.println(" degrees");
+
+        Serial.println("-------------------------");
+      }
+
+
+      // ---------------------------------
+      // NO PLANE FOUND
+      // ---------------------------------
+
+      else
+      {
+        Serial.println("No aircraft found nearby.");
+      }
+    }
+
+
+    // ---------------------------------
+    // API ERROR
+    // ---------------------------------
+
+    else
+    {
+      Serial.print("HTTP error: ");
+      Serial.println(httpCode);
+    }
+
+
+    https.end();
+  }
+
+
+  // ---------------------------------
+  // CONNECTION ERROR
+  // ---------------------------------
+
+  else
+  {
+    Serial.println("Could not connect to API.");
+  }
+}
+
+
+// =====================================================
+// MOVE STEPPER TO PLANE DIRECTION
+// =====================================================
+
+void moveStepperToBearing(float bearing)
+{
+  // Convert 0 - 360 degrees
+  // into motor steps
+
+  long targetSteps =
+    (bearing / 360.0) *
+    STEPS_PER_REVOLUTION;
+
+
+  // Find current position
+  // inside one full rotation
+
+  long currentSteps =
+    directionStepper.currentPosition()
+    % STEPS_PER_REVOLUTION;
+
+
+  if (currentSteps < 0)
+  {
+    currentSteps +=
+      STEPS_PER_REVOLUTION;
+  }
+
+
+  // Calculate how far to move
+
+  long difference =
+    targetSteps - currentSteps;
+
+
+  // Take the shortest way around
+
+  if (difference >
+      STEPS_PER_REVOLUTION / 2)
+  {
+    difference -=
+      STEPS_PER_REVOLUTION;
+  }
+
+
+  if (difference <
+      -STEPS_PER_REVOLUTION / 2)
+  {
+    difference +=
+      STEPS_PER_REVOLUTION;
+  }
+
+
+  // Move the motor
+
+  directionStepper.move(difference);
+
+  directionStepper.runToPosition();
+}
+
+
+// =====================================================
+// CALCULATE DISTANCE
+// =====================================================
+
+float calculateDistance(
+  float lat1,
+  float lon1,
+  float lat2,
+  float lon2
+)
+{
+  const float earthRadius = 6371.0;
+
+  float dLat =
+    radians(lat2 - lat1);
+
+  float dLon =
+    radians(lon2 - lon1);
+
+  lat1 = radians(lat1);
+  lat2 = radians(lat2);
+
+
+  float a =
+    sin(dLat / 2) *
+    sin(dLat / 2) +
+
+    cos(lat1) *
+    cos(lat2) *
+    sin(dLon / 2) *
+    sin(dLon / 2);
+
+
+  float c =
+    2 * atan2(
+      sqrt(a),
+      sqrt(1 - a)
+    );
+
+
+  return earthRadius * c;
+}
+
+
+// =====================================================
+// CALCULATE DIRECTION TO PLANE
+// =====================================================
+
+float calculateBearing(
+  float lat1,
+  float lon1,
+  float lat2,
+  float lon2
+)
+{
+  lat1 = radians(lat1);
+  lat2 = radians(lat2);
+
+  float dLon =
+    radians(lon2 - lon1);
+
+
+  float y =
+    sin(dLon) *
+    cos(lat2);
+
+
+  float x =
+    cos(lat1) *
+    sin(lat2) -
+
+    sin(lat1) *
+    cos(lat2) *
+    cos(dLon);
+
+
+  float bearing =
+    degrees(
+      atan2(y, x)
+    );
+
+
+  if (bearing < 0)
+  {
+    bearing += 360;
+  }
+
+
+  return bearing;
+}
 
 ## Wiring
 
