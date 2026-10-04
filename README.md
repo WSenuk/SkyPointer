@@ -715,7 +715,7 @@ float calculateBearing(
 
   return bearing;
 }
-
+```
 ## Wiring
 
 ### Connecting the stepper motor
