@@ -7,15 +7,11 @@ Simple build guide for the SkyPointer prototype.
 
 ## What is SkyPointer?
 SkyPointer is a small physical flight tracker for people who like watching airplanes.
-
 It uses live flight data from an online API to find the closest plane near the user. The NodeMCU reads this data and calculates where the plane is.
-
 The product uses two motors:
 - A **stepper motor** turns the pointer left or right to show the direction of the plane.
 - A **servo motor** moves the pointer up or down to show how high the plane is in the sky.
-
 When SkyPointer starts, the user first points it to North. After 30 seconds, the system saves that position and starts searching for nearby planes.
-
 The goal is to make plane spotting easier because the user can simply follow the pointer and know where to look.
 
 ### System flow
@@ -66,17 +62,11 @@ You do not have to buy exactly these products. Similar components with the same 
 
 ### Getting the 5V power supply
 The stepper motor and servo need their own power supply.
-
 The NodeMCU should not power both motors directly because the motors can use more current than the NodeMCU can safely provide.
-
 For this prototype you can use an external power supply of around **5V and 1–2A**.
-
 An adjustable power supply can also be used. Before connecting it to the prototype, make sure it is set to **5V**.
-
 The positive **5V** connection will later be connected to the stepper motor driver and the servo motor.
-
 The **GND** connection will also be connected to the NodeMCU so that all parts share the same ground.
-
 The exact wiring is explained later in the wiring section.
 
 ---
@@ -85,27 +75,18 @@ The exact wiring is explained later in the wiring section.
 
 ### Install the ESP8266 board package
 Before we start, we need to install the Arduino IDE and connect the NodeMCU to the computer.
-
 I have added a PDF guide that explains how to install the Arduino IDE and how to connect the NodeMCU to your device.
 
 ### Install ArduinoJson
 Now we can start with the Arduino program.
-
 Open the **Arduino IDE**.
-
-On the left side you will see an icon that looks like a group of books. Click on this icon to open the **Library Manager**.
-
+On the left side you will see an icon that looks like a group of books. Click on this icon to open the **Library Manager**
 ![Open the Library Manager](images/arduinojson-1.png)
-
 In the search bar, search for **ArduinoJson by Benoit Blanchon**.
 ArduinoJson is used to read the aircraft data that comes from the API.
-
 ![Search for ArduinoJson](images/arduinojson-2.png)
-
 Click **Install**.
-
 ![Install ArduinoJson](images/arduinojson-3.png)
-
 ArduinoJson is now installed.
 
 ### Install AccelStepper
@@ -872,7 +853,6 @@ After that, the system should find the closest aircraft and move:
 - the **stepper motor** left or right to show the direction
 - the **servo motor** up or down to show how high to look
 If both motors move and point in the expected direction, the prototype is working.
-
 <img src="images/oritentation.png" width="400">
 ---
 
