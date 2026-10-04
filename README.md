@@ -104,6 +104,7 @@ The exact wiring is explained later in the **Wiring** section.
 ## Software setup
 
 ### Install the ESP8266 board package
+Before we start, we need to install the Arduino IDE and have the NodeMCU connected with it. I have uploaded a PDF file for a guide on how to install the IDE and on how to connect the NodeMCU with your device.
 
 ### Install ArduinoJson
 
