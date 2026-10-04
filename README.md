@@ -107,7 +107,12 @@ The exact wiring is explained later in the **Wiring** section.
 Before we start, we need to install the Arduino IDE and have the NodeMCU connected with it. I have uploaded a PDF file for a guide on how to install the IDE and on how to connect the NodeMCU with your device.
 
 ### Install ArduinoJson
-
+Its time to start with the Arduino program. Once you have it opened. There is an icon on the left that looks like a bunch of books placed next to each other. Click on that to search the libraries. 
+![clicking on the libraries ](images/arduinojson 1.png)
+![searching in the libraries ](images/arduinojson 2.png)
+Search for ArduinoJson — by Benoit Blanchon Used to read the aircraft data from the API.
+Click on install. 
+![installing the libraries ](images/arduinojson 3.png)
 ### Install AccelStepper
 
 ### Adjusting the code
