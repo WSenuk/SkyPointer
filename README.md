@@ -8,11 +8,6 @@ Simple build guide for the SkyPointer prototype.
 ## What is SkyPointer?
 SkyPointer is a small physical flight tracker for people who like watching airplanes.
 It uses live flight data from an online API to find the closest plane near the user. The NodeMCU reads this data and calculates where the plane is.
-The product uses two motors:
-- A **stepper motor** turns the pointer left or right to show the direction of the plane.
-- A **servo motor** moves the pointer up or down to show how high the plane is in the sky.
-When SkyPointer starts, the user first points it to North. After 30 seconds, the system saves that position and starts searching for nearby planes.
-The goal is to make plane spotting easier because the user can simply follow the pointer and know where to look.
 
 ### System flow
 ![System flow](images/systemflow.png)
@@ -47,27 +42,25 @@ To build SkyPointer you need the following parts:
     </td>
   </tr>
 </table>
-
 The ULN2003 driver board is used between the NodeMCU and the stepper motor. The 28BYJ-48 stepper motor normally plugs directly into this driver board.
 
 ### Where to buy the parts
 You can buy these parts from electronics shops such as TinyTronics or Conrad.
 
-- **NodeMCU ESP8266:** [TinyTronics](https://www.tinytronics.nl/en/development-boards/microcontroller-boards/with-wi-fi/esp8266-nodemcu-v2)
-- **28BYJ-48 Stepper Motor + ULN2003 driver:** [Conrad](https://www.conrad.nl/nl/p/whadda-wpi401-stappenmotorbesturingsmodule-geschikt-voor-serie-arduino-1-stuk-s-2330784.html)
-- **SG90 9g Servo Motor:** [TinyTronics](https://www.tinytronics.nl/en/mechanics-and-actuators/motors/servomotors/sg90-mini-servo)
-- **External power supply:** [TinyTronics adjustable power supply](https://www.tinytronics.nl/nl/power/voedingen/12v/goobay-64570-universele-voedingsadapter-verstelbaar-3-12v-2.25a)
+- NodeMCU ESP8266: [TinyTronics](https://www.tinytronics.nl/en/development-boards/microcontroller-boards/with-wi-fi/esp8266-nodemcu-v2)
+- 28BYJ-48 Stepper Motor + ULN2003 driver: [Conrad](https://www.conrad.nl/nl/p/whadda-wpi401-stappenmotorbesturingsmodule-geschikt-voor-serie-arduino-1-stuk-s-2330784.html)
+- SG90 9g Servo Motor: [TinyTronics](https://www.tinytronics.nl/en/mechanics-and-actuators/motors/servomotors/sg90-mini-servo)
+- External power supply: [TinyTronics adjustable power supply](https://www.tinytronics.nl/nl/power/voedingen/12v/goobay-64570-universele-voedingsadapter-verstelbaar-3-12v-2.25a)
 
 You do not have to buy exactly these products. Similar components with the same specifications can also be used.
 
 ### Getting the 5V power supply
-The stepper motor and servo need their own power supply.
-The NodeMCU should not power both motors directly because the motors can use more current than the NodeMCU can safely provide.
-For this prototype you can use an external power supply of around **5V and 1–2A**.
-An adjustable power supply can also be used. Before connecting it to the prototype, make sure it is set to **5V**.
-The positive **5V** connection will later be connected to the stepper motor driver and the servo motor.
-The **GND** connection will also be connected to the NodeMCU so that all parts share the same ground.
-The exact wiring is explained later in the wiring section.
+Use a separate 5V, 1–2A power supply for the stepper motor and servo.
+Do not power the motors from the NodeMCU.
+Connect:
+- 5V : stepper driver and servo
+- GND : stepper driver, servo, and NodeMCU
+Set an adjustable power supply to 5V before connecting it.
 
 ---
 
@@ -79,17 +72,17 @@ I have added a PDF guide that explains how to install the Arduino IDE and how to
 
 ### Install ArduinoJson
 Now we can start with the Arduino program.
-Open the **Arduino IDE**.
-On the left side you will see an icon that looks like a group of books. Click on this icon to open the **Library Manager**
+Open the Arduino IDE.
+On the left side you will see an icon that looks like a group of books. Click on this icon to open the Library Manager
 
 ![Open the Library Manager](images/arduinojson-1.png)
 
-In the search bar, search for **ArduinoJson by Benoit Blanchon**.
+In the search bar, search for ArduinoJson by Benoit Blanchon.
 ArduinoJson is used to read the aircraft data that comes from the API.
 
 ![Search for ArduinoJson](images/arduinojson-2.png)
 
-Click **Install**.
+Click Install.
 
 ![Install ArduinoJson](images/arduinojson-3.png)
 
@@ -104,7 +97,7 @@ Click on install.
 Now that the libraries are installed, we need to adjust the code so it uses your Wi-Fi and your current location.
 #### The Code
 Click on **File** in the top-left corner of the Arduino IDE.
-Then click **New Sketch**.
+Then click New Sketch.
 This will open a new place where you can add your code.
 Copy the code below and paste it into the new sketch.
 <details>
@@ -710,9 +703,7 @@ float calculateBearing(
 #### Adding Wi-Fi
 
 Once the code is copied in, we need to connect the NodeMCU to your Wi-Fi.
-
-The NodeMCU uses a **2.4 GHz Wi-Fi connection**. You can also turn on the hotspot on your phone and connect the NodeMCU to it.
-
+The NodeMCU uses a 2.4 GHz Wi-Fi connection. You can also turn on the hotspot on your phone and connect the NodeMCU to it.
 We need to give the NodeMCU access to your Wi-Fi. Add your Wi-Fi name and password between the quotation marks:
 
 ```cpp
@@ -723,11 +714,11 @@ We need to give the NodeMCU access to your Wi-Fi. Add your Wi-Fi name and passwo
 Replace `YOUR_WIFI_NAME` and `YOUR_WIFI_PASSWORD` with your own Wi-Fi details.
 
 #### Adding your location
-We are using **ADSB.lol** to help us track the aircraft.
+We are using ADSB.lol to help us track the aircraft.
 ADSB.lol is a community-driven, open-source flight tracking platform that provides live aviation data. It uses a network of volunteers who receive ADS-B signals broadcast by aircraft.
 For SkyPointer, we are using its API to get live aircraft data.
 To make this work, we need to add the location where SkyPointer will be used.
-Go to **Google Maps** and find the location you want to use. Right-click on the location to see its **latitude and longitude**.
+Go to Google Maps and find the location you want to use. Right-click on the location to see its latitude and longitude.
 ![Latitude and longitude](images/location.png)
 Look for this part in the code:
 ```cpp
@@ -771,19 +762,19 @@ You can check https://adsb.lol/ to see if this pick up is accurate.
 ## Wiring
 Now connect all the parts together.
 SkyPointer uses:
-- A **28BYJ-48 stepper motor** for left and right movement.
-- A **9g servo motor** for up and down movement.
-- A **ULN2003 driver board** for the stepper motor.
-- An external **5V power supply** for the motors.
+- A 28BYJ-48 stepper motor for left and right movement.
+- A 9g servo motor for up and down movement.
+- A ULN2003 driver board for the stepper motor.
+- An external 5V power supply for the motors.
 - 
 ### Connecting the stepper motor
-Plug the **28BYJ-48 stepper motor** into the white connector on the ULN2003 board.
+Plug the 28BYJ-48 stepper motor into the white connector on the ULN2003 board.
 
 Connect:
-- **D1 → IN1**
-- **D2 → IN2**
-- **D5 → IN3**
-- **D6 → IN4**
+- D1 : IN1
+- D2 : IN2
+- D5 : IN3
+- D6 : IN4
 
 This matches the code:
 ```cpp
@@ -795,32 +786,31 @@ This matches the code:
 
 ### Connecting the servo motor
 A 9g servo normally has three wires:
-- **Red = 5V**
-- **Brown/Black = GND**
-- **Orange/Yellow = Signal**
+- Red = 5V
+- Brown/Black = GND
+- Orange/Yellow = Signal
 Connect:
-- **D7 → Servo signal**
+- D7 : Servo signal
 
 This matches the code:
-
 ```cpp
 skyServo.attach(D7);
 ```
 
 ### Connecting the 5V power supply
-Use an external power supply of around **5V and 1–2A**.
+Use an external power supply of around 5V and 1–2A.
 
-Connect **5V** to:
-- **ULN2003 VCC**
-- **Servo red wire**
+Connect 5V to:
+- ULN2003 VCC
+- Servo red wire
 
-Connect **GND** to:
-- **ULN2003 GND**
-- **Servo brown/black wire**
-- **NodeMCU GND**
+Connect GND to:
+- ULN2003 GND
+- Servo brown/black wire
+- NodeMCU GND
 The NodeMCU can stay powered through USB.
-**Important:** The NodeMCU GND and power supply GND must be connected together.
-**Important:** Do not power the motors from the NodeMCU 3.3V pin.
+Important: The NodeMCU GND and power supply GND must be connected together.
+Important: Do not power the motors from the NodeMCU 3.3V pin.
 ### Complete wiring overview
 
 | From | To |
@@ -846,7 +836,7 @@ Check all wires before turning the prototype on.
 ## Testing the prototype
 Before testing, place the motors in their starting positions.
 ### Stepper motor
-Point the stepper motor to **North** before the 30 second setup starts.
+Point the stepper motor to North before the 30 second setup starts.
 If your stepper motor does not have a plastic pointer piece, attach something simple to the shaft so you can clearly see which direction it is pointing.
 
 <img src="images/stepperarm.png" width="400">
@@ -860,8 +850,8 @@ Attach one of the small plastic servo arms that comes with the servo. This makes
 ### Test
 Turn on SkyPointer and let it complete the 30 second North setup.
 After that, the system should find the closest aircraft and move:
-- the **stepper motor** left or right to show the direction
-- the **servo motor** up or down to show how high to look
+- the stepper motor left or right to show the direction
+- the servo motor up or down to show how high to look
 If both motors move and point in the expected direction, the prototype is working.
 
 <img src="images/oritentation.png" width="400">
@@ -876,11 +866,11 @@ To fix it, click the port menu at the top of Arduino IDE and select the port con
 After selecting the correct port, upload the code again.
 ### Serial Monitor problem
 We also had a problem with the Serial Monitor while testing the flight data.
-Make sure the Serial Monitor is set to **115200 baud**.
+Make sure the Serial Monitor is set to 115200 baud.
 Also check that the correct COM port is selected.
 ### NodeMCU does not connect to Wi-Fi
 Check if the Wi-Fi name and password are correct.
-Also make sure you are using a **2.4 GHz** Wi-Fi network.
+Also make sure you are using a 2.4 GHz Wi-Fi network.
 ### No plane is found
 Check if your internet connection works.
 You can also increase the search radius in the code.
@@ -890,14 +880,14 @@ const int RADIUS = 50;
 ```
 Increase the radius until SkyPointer detects a plane.
 ### Stepper motor does not move
-Check if the ULN2003 board has power and if **D1, D2, D5 and D6** are connected correctly.
+Check if the ULN2003 board has power and if D1, D2, D5 and D6 are connected correctly.
 Also check if the stepper motor is plugged into the white connector.
 ### Servo motor does not move
-Check if the servo signal wire is connected to **D7**.
-Also check the **5V and GND** connections.
+Check if the servo signal wire is connected to D7.
+Also check the 5V and GND connections.
 ### NodeMCU keeps restarting
 This is usually a power problem.
-Make sure the motors use the external **5V power supply** and not the NodeMCU 3.3V pin.
+Make sure the motors use the external 5V power supply and not the NodeMCU 3.3V pin.
 
 ## Sources
 These sources were used for the code, libraries and flight data:
