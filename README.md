@@ -731,7 +731,7 @@ For example:
 const float MY_LAT = 52.359222;
 const float MY_LON = 4.908967;
 ```
-## 2 Testing the code
+## 2, Testing the code
 Now that we got our own credentials in. We could test out if it picks everything up and if the code that you changed works. 
 Plug in your NodeMCU and send the code to it. Turn on your hotspot as well.
 On the top left there in and arrow symbol. If you hover over it, it will give u the option to upload it. Click it to send it to the arduino.
@@ -759,7 +759,7 @@ If everything went well. You can read off the serial monitor that it is connecte
 You can check https://adsb.lol/ to see if this pick up is accurate.
 ![Plane info 2 ](images/planeinfo2.png)
 
-## 3 Wiring
+## 3, Wiring
 Now connect all the parts together.
 SkyPointer uses:
 - A 28BYJ-48 stepper motor for left and right movement.
@@ -833,7 +833,7 @@ Check all wires before turning the prototype on.
 
 ---
 
-## 4 Testing the prototype
+## 4, Testing the prototype
 Before testing, place the motors in their starting positions.
 ### 4,1 Stepper motor
 Point the stepper motor to North before the 30 second setup starts.
