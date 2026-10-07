@@ -64,13 +64,13 @@ Set an adjustable power supply to 5V before connecting it.
 
 ---
 
-## Software setup
+## 1, Software setup
 
-### Install the ESP8266 board package
+### 1,1 Install the ESP8266 board package
 Before we start, we need to install the Arduino IDE and connect the NodeMCU to the computer.
 I have added a PDF guide that explains how to install the Arduino IDE and how to connect the NodeMCU to your device.
 
-### Install ArduinoJson
+### 1,2 Install ArduinoJson
 Now we can start with the Arduino program.
 Open the Arduino IDE.
 On the left side you will see an icon that looks like a group of books. Click on this icon to open the Library Manager
@@ -88,12 +88,12 @@ Click Install.
 
 ArduinoJson is now installed.
 
-### Install AccelStepper
+### 1,3 Install AccelStepper
 Search for AccelStepper — by Mike McCauley Used to control the 28BYJ-48 stepper motor.
 Click on install. 
 ![Install AccelStepper](images/accelstepper.png)
 
-### Adjusting the code
+### 1,4 Adjusting the code
 Now that the libraries are installed, we need to adjust the code so it uses your Wi-Fi and your current location.
 #### The Code
 Click on **File** in the top-left corner of the Arduino IDE.
@@ -700,7 +700,7 @@ float calculateBearing(
 ```
 </details>
 
-#### Adding Wi-Fi
+#### 1,5 Adding Wi-Fi
 
 Once the code is copied in, we need to connect the NodeMCU to your Wi-Fi.
 The NodeMCU uses a 2.4 GHz Wi-Fi connection. You can also turn on the hotspot on your phone and connect the NodeMCU to it.
@@ -713,7 +713,7 @@ We need to give the NodeMCU access to your Wi-Fi. Add your Wi-Fi name and passwo
 
 Replace `YOUR_WIFI_NAME` and `YOUR_WIFI_PASSWORD` with your own Wi-Fi details.
 
-#### Adding your location
+#### 1,6 Adding your location
 We are using ADSB.lol to help us track the aircraft.
 ADSB.lol is a community-driven, open-source flight tracking platform that provides live aviation data. It uses a network of volunteers who receive ADS-B signals broadcast by aircraft.
 For SkyPointer, we are using its API to get live aircraft data.
@@ -731,7 +731,7 @@ For example:
 const float MY_LAT = 52.359222;
 const float MY_LON = 4.908967;
 ```
-## Testing the code
+## 2 Testing the code
 Now that we got our own credentials in. We could test out if it picks everything up and if the code that you changed works. 
 Plug in your NodeMCU and send the code to it. Turn on your hotspot as well.
 On the top left there in and arrow symbol. If you hover over it, it will give u the option to upload it. Click it to send it to the arduino.
@@ -743,7 +743,7 @@ How to fix is by selecting the right COM port above. There is a drop down on the
 Now send it again. Once done uploading, it will say that it is resetting the pins. That means it has uploaded it. 
 ![Done uploading](images/doneuploading.png)
 
-#### Serial monitor
+#### 2,1 Serial monitor
 We can now check to see if everything is working. We have to start by opening serial monitor. On the top right there is an icon that looks like a magnifying glass. Click on it. 
 ![Opening Serial Monitor](images/openingserialmonitor.png)
 Once it is opened, we need to fix the baud rate. Normally it is set to 9600 baud but we need to switch it to 115200 baud. Click the drop down button and change  it to it. 
@@ -751,7 +751,7 @@ Once it is opened, we need to fix the baud rate. Normally it is set to 9600 baud
 After changing it, upload the code again if nothing pops up. 
 ![Fixing the baud rate](images/fixingserialmonitor.png)
 
-#### Working
+#### 2,2 Working
 If everything went well. You can read off the serial monitor that it is connected to the wifi and it is picks out planes that are close to you. 
 ![Connected system ](images/wificonnected.png)
 ![Plane info ](images/planeinfo.png)
@@ -759,7 +759,7 @@ If everything went well. You can read off the serial monitor that it is connecte
 You can check https://adsb.lol/ to see if this pick up is accurate.
 ![Plane info 2 ](images/planeinfo2.png)
 
-## Wiring
+## 3 Wiring
 Now connect all the parts together.
 SkyPointer uses:
 - A 28BYJ-48 stepper motor for left and right movement.
@@ -767,7 +767,7 @@ SkyPointer uses:
 - A ULN2003 driver board for the stepper motor.
 - An external 5V power supply for the motors.
 - 
-### Connecting the stepper motor
+### 3,1 Connecting the stepper motor
 Plug the 28BYJ-48 stepper motor into the white connector on the ULN2003 board.
 
 Connect:
@@ -784,7 +784,7 @@ This matches the code:
 #define IN4 D6
 ```
 
-### Connecting the servo motor
+### 3,2 Connecting the servo motor
 A 9g servo normally has three wires:
 - Red = 5V
 - Brown/Black = GND
@@ -797,7 +797,7 @@ This matches the code:
 skyServo.attach(D7);
 ```
 
-### Connecting the 5V power supply
+### 3,3 Connecting the 5V power supply
 Use an external power supply of around 5V and 1–2A.
 
 Connect 5V to:
@@ -826,28 +826,28 @@ Important: Do not power the motors from the NodeMCU 3.3V pin.
 | External GND | Servo GND |
 | External GND | NodeMCU GND |
 
-### Wiring diagram
+### 3,4 Wiring diagram
 ![SkyPointer wiring diagram](images/wiring-diagram.png)
 
 Check all wires before turning the prototype on.
 
 ---
 
-## Testing the prototype
+## 4 Testing the prototype
 Before testing, place the motors in their starting positions.
-### Stepper motor
+### 4,1 Stepper motor
 Point the stepper motor to North before the 30 second setup starts.
 If your stepper motor does not have a plastic pointer piece, attach something simple to the shaft so you can clearly see which direction it is pointing.
 
 <img src="images/stepperarm.png" width="400">
 
-### Servo motor
+### 4,2 Servo motor
 Place the servo in its starting position so the pointer is facing straight forward.
 Attach one of the small plastic servo arms that comes with the servo. This makes it easier to see the up and down movement.
 
 <img src="images/servoarm.png" width="400">
 
-### Test
+### 4,3 Test
 Turn on SkyPointer and let it complete the 30 second North setup.
 After that, the system should find the closest aircraft and move:
 - the stepper motor left or right to show the direction
