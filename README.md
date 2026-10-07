@@ -898,3 +898,4 @@ These sources were used for the code, libraries and flight data:
 These websites helped with setting up the NodeMCU, reading the API data and controlling the motors.
 The AI was used to help write and adjust parts of the code. The code was tested during the project, but mistakes can still happen.
 Always check the code and wiring before using the prototype.
+AI Chat : https://chatgpt.com/share/6ac6aa8c-f3d4-83eb-a8fe-d867d9a34061
